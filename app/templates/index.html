@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Stok Parfum Refile</title>
+</head>
+<body>
+  <h1>Stok Parfum Refile</h1>
+  <form action="{{ url_for('add') }}" method="post">
+    <input type="text" name="name" placeholder="Nama Parfum" required>
+    <input type="number" name="quantity" placeholder="Jumlah" required>
+    <button type="submit">Tambah</button>
+  </form>
+  <table border="1" cellpadding="5" cellspacing="0">
+    <tr>
+      <th>Nama</th>
+      <th>Jumlah</th>
+      <th>Aksi</th>
+    </tr>
+    {% for item in items %}
+    <tr>
+      <td>{{ item[1] }}</td>
+      <td>
+        <form action="{{ url_for('update', item_id=item[0]) }}" method="post">
+          <input type="number" name="quantity" value="{{ item[2] }}" required>
+          <button type="submit">Update</button>
+        </form>
+      </td>
+      <td>
+        <form action="{{ url_for('delete', item_id=item[0]) }}" method="post" onsubmit="return confirm('Hapus parfum ini?');">
+          <button type="submit">Hapus</button>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </table>
+</body>
+</html>
